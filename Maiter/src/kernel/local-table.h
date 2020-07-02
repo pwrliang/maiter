@@ -19,6 +19,8 @@ class LocalTable :
   public Snapshottable {
 public:
   LocalTable() : delta_file_(NULL) {}
+  virtual ~LocalTable(){}
+
   bool empty() { return size() == 0; }
 
   void start_checkpoint(const string& f);

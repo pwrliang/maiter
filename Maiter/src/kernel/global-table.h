@@ -181,9 +181,11 @@ class TypedGlobalTable :
   public TypedTable<K, V1, V2, V3>,
   private boost::noncopyable {
 public:
-	bool initialized(){
-		return binit;
-	}
+  virtual ~TypedGlobalTable(){}
+
+  bool initialized(){
+	return binit;
+  }
 
   typedef pair<K, V1> KVPair;
   typedef TypedTableIterator<K, V1, V2, V3> Iterator;

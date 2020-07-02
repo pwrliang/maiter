@@ -349,7 +349,7 @@ public:
                 totalF2+=it2->value2();         //for experiment, recording the sum of v
                 updates++;                      //for experiment, recording the number of updates
 
-                cout << "processing " << it2->key() << " " << it2->value1() << " " << it2->value2() << endl;
+                //cout << "processing " << it2->key() << " " << it2->value1() << " " << it2->value2() << endl;
                 run_iter(it2->key(), it2->value1(), it2->value2(), it2->value3());
             }
             delete it2;                         //delete the table iterator
@@ -393,7 +393,8 @@ public:
                 
                 totalF1 += it->value1();
                 totalF2 += it->value2();
-                File << it->key() << "\t" << it->value1() << ":" << it->value2() << "\n";
+                File << it->key() << "\t"  << it->value2() << "\n";
+                //File << it->key() << "\t" << it->value1() << ":" << it->value2() << "\n";
         }
         delete it;
 

@@ -16,7 +16,7 @@ struct AdsorptionIterateKernel : public IterateKernel<int, float, vector<Link> >
 
     AdsorptionIterateKernel() : zero(0){}
 
-    void read_data(string& line, int* k, vector<Link>* data){
+    void read_data(string& line, int& k, vector<Link>& data){
         string linestr(line);
         int pos = linestr.find("\t");
         int source = boost::lexical_cast<int>(linestr.substr(0, pos));
@@ -37,27 +37,29 @@ struct AdsorptionIterateKernel : public IterateKernel<int, float, vector<Link> >
             linkvec.push_back(to);
         }
 
-        *k = source;
-        *data = linkvec;
+        k = source;
+        data = linkvec;
     }
 
-    void init_c(const int& k, float* delta){
+    void init_c(const int& k, float& delta,vector<Link>& data){
         if(k < FLAGS_adsorption_starts){
-            *delta = 10;
+            delta = 10;
         }else{
-            *delta = 0;
+            delta = 0;
         }
     }
-
-    void accumulate(float* a, const float& b){
-        *a = *a + b;
+    void init_v(const int& k, float& delta,vector<Link>& data){
+        delta=zero;
+    }
+    void accumulate(float& a, const float& b){
+        a = a + b;
     }
 
-    void priority(float* pri, const float& value, const float& delta){
-        *pri = delta;
+    void priority(float& pri, const float& value, const float& delta){
+        pri = delta;
     }
 
-    void g_func(const float& delta, const vector<Link>& data, vector<pair<int, float> >* output){
+    void g_func(const int& k, const float& delta,const float& value, const vector<Link>& data, vector<pair<int, float> >* output){
         for(vector<Link>::const_iterator it=data.begin(); it!=data.end(); it++){
             Link target = *it;
             float outv = delta * FLAGS_adsorption_damping * target.weight;

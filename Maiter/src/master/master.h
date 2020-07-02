@@ -90,7 +90,7 @@ public:
   template<class K, class V, class D>
   void run_maiter(MaiterKernel<K, V, D>* maiter){
       if(maiter->sharder == NULL){
-          maiter->sharder = new Sharding::Mod;
+         // maiter->sharder = new Sharding::Mod;
       }
       
       run_all("MaiterKernel1", "run", maiter->table);

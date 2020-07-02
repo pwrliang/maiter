@@ -74,6 +74,8 @@ public:
             //Next();
         }
 
+	virtual ~Iterator(){}
+
         Marshal<K>* kmarshal() { return parent_.kmarshal(); }
         Marshal<V1>* v1marshal() { return parent_.v1marshal(); }
         Marshal<V2>* v2marshal() { return parent_.v2marshal(); }
@@ -197,6 +199,8 @@ public:
             //Next();
          }
   
+	virtual ~ScheduledIterator(){}
+
         Marshal<K>* kmarshal() { return parent_.kmarshal(); }
         Marshal<V1>* v1marshal() { return parent_.v1marshal(); }
         Marshal<V2>* v2marshal() { return parent_.v2marshal(); }
@@ -244,6 +248,8 @@ public:
             pos = -1;
             defaultv = ((IterateKernel<K, V1, V3>*)parent_.info_.iterkernel)->default_v();
         }
+
+	virtual ~EntirePassIterator(){}
 
         Marshal<K>* kmarshal() { return parent_.kmarshal(); }
         Marshal<V1>* v1marshal() { return parent_.v1marshal(); }
@@ -572,7 +578,7 @@ void StateTable<K, V1, V2, V3>::resize(int64_t size) {
   for (int i = 0; i < old_b.size(); ++i) {
     if (old_b[i].in_use) {    
       put(old_b[i].k, old_b[i].v1, old_b[i].v2, old_b[i].v3);
-      LOG(INFO) << "copy: " << old_b[i].k;
+     // LOG(INFO) << "copy: " << old_b[i].k;
     }
   }
 
@@ -705,7 +711,7 @@ void StateTable<K, V1, V2, V3>::put(const K& k, const V1& v1, const V2& v2, cons
         resize((int)(1 + size_ * 2));
         put(k, v1, v2, v3);
         ++entries_;
-        VLOG(0) << "if entries_: " << entries_<<"  key: "<<k;
+        //VLOG(0) << "if entries_: " << entries_<<"  key: "<<k;
     } else {
       buckets_[b].in_use = 1;
       buckets_[b].k = k;
@@ -714,7 +720,7 @@ void StateTable<K, V1, V2, V3>::put(const K& k, const V1& v1, const V2& v2, cons
       buckets_[b].v3 = v3;
       ((IterateKernel<K, V1, V3>*)info_.iterkernel)->priority(buckets_[b].priority, buckets_[b].v2, buckets_[b].v1);
       ++entries_;
-      VLOG(0) << "else entries_: " << entries_<<"  key: "<<k;
+      //VLOG(0) << "else entries_: " << entries_<<"  key: "<<k;
     }
   } else {
     // Replacing an existing entry

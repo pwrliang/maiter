@@ -80,11 +80,7 @@ struct Simrankiterate : public IterateKernel<string, double, vector<vector<int> 
             string key_a=key.substr(0,pos);
             string key_b=key.substr(pos+1);
             if(key_a==key_b){
-                if(data[0][0]==0){
-                    delta=1;
-                }else{
-                    delta=data[0][0]/0.8;
-                }
+                delta=data[0][0]/0.8; 
             }else{
                 delta=0;
             }
@@ -96,17 +92,12 @@ struct Simrankiterate : public IterateKernel<string, double, vector<vector<int> 
             v=0.0;
     }
     void process_delta_v(const string& k, double& delta, double& value, vector<vector<int> >& data){
-        if(count==0) return;
+        //if(count==0) return;
         if(delta==0) return;
         int I_ab=boost::lexical_cast<int>(data[0][0]);
-        if(I_ab==0)return;
-        //value=value-delta;
-        //cout<<"data[0]:"<<data[0]<<endl;
-        //cout<<"delta_v:"<<delta<<endl;
-        //value=(0.8*delta)/I_ab;
-        //cout<<"delta:"<<delta<<endl;
+        if(I_ab==0)return;  
         delta=(delta*0.8)/I_ab;
-       // cout<<"process_delta_V"<<endl;
+       // cout<<k<<"  process_delta_V:  "<<delta<<endl;
         
     }
 
@@ -125,7 +116,7 @@ struct Simrankiterate : public IterateKernel<string, double, vector<vector<int> 
             string key=k;
             count++;
             //cout<<"v:"<<value<<endl;
-            if(delta<=0.0001) return;
+            if(delta==0) return;
             //count++;
             int I_ab=data[0][0];
             if(I_ab==0)return;
@@ -161,7 +152,7 @@ struct Simrankiterate : public IterateKernel<string, double, vector<vector<int> 
                     if(pos==1){
                         list.push_back(key);
                         output->push_back(make_pair(key,outv));
-                       // cout<<"key: "<<key<<endl;
+                       // cout<<k <<"  "<<key<<"  "<<outv<<endl;
                     }     
                 }
             } 

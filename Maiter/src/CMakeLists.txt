@@ -17,7 +17,7 @@ include(CheckFunctionExists)
 find_package(PythonLibs)
 find_package(SWIG)
 find_package(SDL)
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system thread)
 
 check_include_file_cxx("google/protobuf/descriptor.h" HAVE_PROTOBUF)
 

@@ -39,6 +39,8 @@ public:
       Next();
     }
 
+    virtual ~Iterator(){}
+
     Marshal<K>* kmarshal() { return parent_.kmarshal(); }
     Marshal<V1>* v1marshal() { return parent_.v1marshal(); }
 
